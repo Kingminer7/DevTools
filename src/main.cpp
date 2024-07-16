@@ -30,8 +30,18 @@ class $modify(CCKeyboardDispatcher) {
     }
 };
 
-#ifdef GEODE_IS_MOBILE
+#ifdef GEODE_IS_ANDROID
 // lol
+#include <Geode/modify/MenuLayer.hpp>
+class $modify(MenuLayer) {
+    void onMoreGames(CCObject*) {
+        DevTools::get()->toggle();
+    }
+};
+
+#endif
+
+#ifdef GEODE_IS_IOS
 #include <Geode/modify/MenuLayer.hpp>
 class $modify(MenuLayer) {
     void onMoreGames(CCObject*) {

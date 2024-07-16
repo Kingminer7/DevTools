@@ -1,3 +1,7 @@
+## 1.7.1
+
+* geode catgirls support
+
 ## v1.7.0
 
 * Support for 2.206
