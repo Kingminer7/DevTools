@@ -18,7 +18,7 @@ jobs:
         - name: macOS (ARM and 64-bit)
           os: macos-latest
 
-        - name: iOS (aka catgirls)
+        - name: iOS
           os: macos-latest
           target: iOS
 
