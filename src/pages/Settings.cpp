@@ -200,8 +200,8 @@ void DevTools::drawSettings() {
 
     ImGui::TextWrapped(
         "Running Geode %s, DevTools %s",
-        Loader::get()->getVersion().toString().c_str(),
-        Mod::get()->getVersion().toString().c_str()
+        Loader::get()->getVersion().toVString().c_str(),
+        Mod::get()->getVersion().toVString().c_str()
     );
 
     if (ImGui::Button("Reset Layout")) {
@@ -209,7 +209,8 @@ void DevTools::drawSettings() {
     }
 }
 
-class $modify(AppDelegate) {
+// TODO: this hook also isnt gd *
+/*class $modify(AppDelegate) {
     void applicationWillEnterForeground() override {
         AppDelegate::applicationWillEnterForeground();
         if (DevTools::get()->pausedGame()) {
@@ -217,4 +218,4 @@ class $modify(AppDelegate) {
             // FMODAudioEngine::sharedEngine()->m_globalChannel->setPaused(true);
         }
     }
-};
+};*/
