@@ -1,4 +1,3 @@
-
 #include "platform/platform.hpp"
 #include <Geode/modify/CCKeyboardDispatcher.hpp>
 #include <Geode/modify/AchievementNotifier.hpp>
@@ -43,7 +42,7 @@ class $modify(DTMenuLayer, MenuLayer) {
         }
 
         auto btn = CCMenuItemSpriteExtra::create(
-            CircleButtonSprite::create(
+            CircleButtonSprite::createWithSprite(
                 "devtools.png"_spr, 1, CircleBaseColor::Green,
                 CircleBaseSize::MediumAlt),
             this, menu_selector(DTMenuLayer::onDevTools));
