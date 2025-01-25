@@ -19,6 +19,8 @@ class $modify(CCNode) {
     }
 };
 
+#ifndef GEODE_IS_IOS
+
 // todo: use shortcuts api once Geode has those
 class $modify(CCKeyboardDispatcher) {
     bool dispatchKeyboardMSG(enumKeyCodes key, bool down, bool arr) {
@@ -30,18 +32,8 @@ class $modify(CCKeyboardDispatcher) {
     }
 };
 
-#ifdef GEODE_IS_ANDROID
+#ifdef GEODE_IS_MOBILE
 // lol
-#include <Geode/modify/MenuLayer.hpp>
-class $modify(MenuLayer) {
-    void onMoreGames(CCObject*) {
-        DevTools::get()->toggle();
-    }
-};
-
-#endif
-
-#ifdef GEODE_IS_IOS
 #include <Geode/modify/MenuLayer.hpp>
 class $modify(MenuLayer) {
     void onMoreGames(CCObject*) {
