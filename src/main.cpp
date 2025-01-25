@@ -32,6 +32,8 @@ class $modify(CCKeyboardDispatcher) {
     }
 };
 
+#endif
+
 #ifdef GEODE_IS_MOBILE
 // lol
 #include <Geode/modify/MenuLayer.hpp>
