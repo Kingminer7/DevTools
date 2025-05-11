@@ -67,6 +67,29 @@ void DevTools::setupPlatform() {
     #endif
 }
 
+#ifdef GEODE_IS_ANDROID
+bool isKeyboardOpen = false;
+
+class $modify (AIME, CCIMEDispatcher) {
+  void dispatchKeyboardWillHide(CCIMEKeyboardNotificationInfo &info) {
+    queueInMainThread([](){
+        ImGui::GetIO().AddKeyEvent(ImGuiKey_Enter, true);
+        ImGui::GetIO().AddKeyEvent(ImGuiKey_Enter, false);
+    });
+    CCIMEDispatcher::dispatchKeyboardWillHide(info);
+  }
+  
+  const char *getContentText() {
+    if (!isKeyboardOpen) return CCIMEDispatcher::getContentText();
+    std::string text = "";
+    for (auto str : ImGui::GetInputTextState(ImGui::GetFocusID())->TextA) {
+       text += str;
+    }
+    return text.c_str();
+  }
+};
+#endif
+
 void DevTools::newFrame() {
     auto& io = ImGui::GetIO();
 
@@ -95,6 +118,20 @@ void DevTools::newFrame() {
     io.KeyAlt = kb->getAltKeyPressed() || kb->getCommandKeyPressed(); // look
     io.KeyCtrl = kb->getControlKeyPressed();
     io.KeyShift = kb->getShiftKeyPressed();
+    
+    #ifdef GEODE_IS_ANDROID
+    if (ImGui::GetIO().WantTextInput) {
+      if (!isKeyboardOpen) {
+        isKeyboardOpen = true;
+        CCEGLView::get()->setIMEKeyboardState(true);
+      }
+    } else {
+      if (isKeyboardOpen) {
+        isKeyboardOpen = false;
+        CCEGLView::get()->setIMEKeyboardState(false);
+      }
+    }
+    #endif
 }
 
 void DevTools::render(GLRenderCtx* ctx) {
