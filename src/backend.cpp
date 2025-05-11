@@ -84,8 +84,7 @@ class $modify (AIME, CCIMEDispatcher) {
   
   const char *getContentText() {
     if (!isKeyboardOpen) return CCIMEDispatcher::getContentText();
-    static std::string text = "";
-    text.clear();
+    std::string text = "";
     for (auto str : ImGui::GetInputTextState(ImGui::GetFocusID())->TextA) {
        text += str;
     }
