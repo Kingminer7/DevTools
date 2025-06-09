@@ -17,7 +17,6 @@ bool DragButton::init() {
     setContentSize(m_sprite->getScaledContentSize());
     m_sprite->setPosition(getContentSize() / 2);
 
-    CCScene::get()->addChild(this);
     SceneManager::get()->keepAcrossScenes(this);
     scheduleUpdate();
 
@@ -161,13 +160,16 @@ class $modify(CCScene) {
     }
 };
 
-#include <Geode/modify/MenuLayer.hpp>
+#include <Geode/modify/CCScene.hpp>
 
-class $modify(MenuLayer) {
+class $modify(CCScene) {
   bool init() {
-    if (!MenuLayer::init()) return false;
+    if (!CCScene::init()) return false;
 
-    DragButton::get();
+    auto btn = DragButton::get();
+    if (!btn->getParent()) {
+        addChild(btn);
+    }
     return true;
   }
 };

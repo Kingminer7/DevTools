@@ -23,6 +23,7 @@
 			"resources/*.png"
 		]
 	},
+	"early-load": true,
 	"settings": {
 		"should-use-gd-window": {
 			"type": "bool",
