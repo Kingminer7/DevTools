@@ -398,6 +398,13 @@ ImGuiKey cocosToImGuiKey(cocos2d::enumKeyCodes key) {
 }
 
 class $modify(CCKeyboardDispatcher) {
+    static void onModify(auto& self) {
+        Result<> res = self.setHookPriorityBeforePre("CCKeyboardDispatcher::updateModifierKeys", "geode.custom-keybinds");
+        if (!res) {
+            geode::log::warn("Failed to set hook priority for CCKeyboardDispatcher::updateModifierKeys: {}", res.unwrapErr());
+        }
+    }
+
     bool dispatchKeyboardMSG(enumKeyCodes key, bool down, bool repeat) {
 		auto& io = ImGui::GetIO();
 		const auto imKey = cocosToImGuiKey(key);
@@ -405,9 +412,9 @@ class $modify(CCKeyboardDispatcher) {
 			io.AddKeyEvent(imKey, down);
 		}
 
-        // CCIMEDispatcher stuff only gets called on android if the virtual keyboard would be up.
+        // CCIMEDispatcher stuff only gets called on mobile if the virtual keyboard would be up.
         // Similarly, CCKeyboardDispatcher doesn't get called if the virtual keyboard would be up.
-        #ifdef GEODE_IS_ANDROID
+        #ifdef GEODE_IS_MOBILE
         if (down) {
             char c = 0;
             if (key >= KEY_A && key <= KEY_Z) {
@@ -438,4 +445,15 @@ class $modify(CCKeyboardDispatcher) {
 			return CCKeyboardDispatcher::dispatchKeyboardMSG(key, down, repeat);
 		}
     }
+
+    #if defined(GEODE_IS_MACOS) || defined(GEODE_IS_IOS)
+    void updateModifierKeys(bool shft, bool ctrl, bool alt, bool cmd) {
+        auto& io = ImGui::GetIO();
+        io.AddKeyEvent(ImGuiKey_ModShift, shft);
+        io.AddKeyEvent(ImGuiKey_ModCtrl, ctrl);
+        io.AddKeyEvent(ImGuiKey_ModAlt, alt);
+        io.AddKeyEvent(ImGuiKey_ModSuper, cmd);
+        CCKeyboardDispatcher::updateModifierKeys(shft, ctrl, alt, cmd);
+    }
+    #endif
 };
