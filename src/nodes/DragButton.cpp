@@ -1,5 +1,6 @@
 #include "DragButton.hpp"
 #include "../DevTools.hpp"
+#include "Geode/ui/OverlayManager.hpp"
 
 using namespace geode::prelude;
 
@@ -98,8 +99,7 @@ DragButton* DragButton::get() {
         instance->setPosition(DevTools::get()->getSettings().buttonPos);
         instance->setZOrder(10000);
         instance->setID("devtools-button"_spr);
-        CCScene::get()->addChild(instance);
-        SceneManager::get()->keepAcrossScenes(instance);
+        OverlayManager::get()->addChild(instance);
     }
     return instance;
 }

@@ -2,6 +2,7 @@
 #include <Geode/utils/cocos.hpp>
 #include "../DevTools.hpp"
 #include "../platform/utils.hpp"
+#include "Geode/ui/OverlayManager.hpp"
 #ifndef GEODE_IS_WINDOWS
 #include <cxxabi.h>
 #endif
@@ -61,4 +62,5 @@ void DevTools::drawTree() {
 #endif
 
     this->drawTreeBranch(CCDirector::get()->getRunningScene(), 0);
+    this->drawTreeBranch(OverlayManager::get(), 1);
 }
